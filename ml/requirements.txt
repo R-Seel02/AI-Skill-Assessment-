@@ -1,0 +1,2 @@
+# Runtime dependencies for the ML pipeline, pinned. Scanned by pip-audit in CI.
+# Empty for now: add packages here (e.g. transformers==x.y.z) as the pipeline is built.
