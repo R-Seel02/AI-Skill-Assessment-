@@ -1,0 +1,72 @@
+# ─── STUDENT DATA: never commit ─────────────────────────────────────────────
+# Raw or identifiable student work stays out of git, full stop. Everything
+# under data/ is ignored except its README; de-identified fixtures used by
+# tests go in tests/fixtures/ or ml/tests/fixtures/ and must be synthetic or
+# fully de-identified.
+data/*
+!data/README.md
+**/raw/
+**/raw_data/
+**/identifiable/
+**/pii/
+**/student_data/
+**/student_submissions/
+**/gradebook*/
+*.roster.*
+roster*.csv
+
+# ─── Model weights and ML artifacts ─────────────────────────────────────────
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.gguf
+*.bin
+*.h5
+*.joblib
+*.pkl
+**/checkpoints/
+**/models/weights/
+**/wandb/
+**/mlruns/
+**/outputs/
+
+# ─── Node ───────────────────────────────────────────────────────────────────
+node_modules/
+dist/
+dist-ssr/
+build/
+coverage/
+*.local
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ─── Python ─────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# ─── Env / secrets ──────────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ─── Editor / OS ────────────────────────────────────────────────────────────
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.sw?
+.DS_Store
+Thumbs.db

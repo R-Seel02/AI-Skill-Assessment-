@@ -1,0 +1,66 @@
+name: CI
+
+# Lint, typecheck, test, build and scan dependencies on every PR.
+# Branch protection on main requires the "node" and "python" jobs to pass before merge.
+# Pushes to main run it too, as the gate in deploy.yml.
+on:
+  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Dependency vulnerability scan
+        run: npm audit --omit=dev --audit-level=high
+
+  python:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ml
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: ml/pyproject.toml
+
+      - run: pip install -e ".[dev]" -r requirements.txt
+
+      - name: Lint
+        run: |
+          ruff check .
+          ruff format --check .
+
+      - name: Test
+        run: pytest -q
+
+      - name: Dependency vulnerability scan
+        run: pip-audit --strict -r requirements.txt
